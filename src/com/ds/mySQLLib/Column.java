@@ -26,7 +26,7 @@ public class Column {
         return cmd.toString();
     }
 
-    public class Types{
+    public abstract static class Types{
         public static final String TEXT = "TEXT";
         public static final String REAL = "REAL";
         public static final String BLOB = "BLOB";

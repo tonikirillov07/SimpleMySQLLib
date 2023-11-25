@@ -1,7 +1,6 @@
 package com.ds.mySQLLib;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -29,9 +28,20 @@ public class DataBase {
         this.anotherConnection = connection;
     }
 
-    private Connection getDBConnection(){
+    public Connection createConnection(String databasePath){
         try {
-            if(anotherConnection != null) {
+            Class.forName("org.sqlite.JDBC");
+            return DriverManager.getConnection("jdbc:sqlite:" + databasePath);
+        }catch (Exception e){
+            showExs.show(e);
+        }
+
+        return null;
+    }
+
+    public Connection getDBConnection(){
+        try {
+            if(anotherConnection == null) {
                 Class.forName("org.sqlite.JDBC");
                 return DriverManager.getConnection("jdbc:sqlite:" + databasePath);
             }else{
@@ -116,7 +126,7 @@ public class DataBase {
             write.deleteCharAt(write.length() - 1);
             write.append(")");
 
-            PreparedStatement preparedStatement = Objects.requireNonNull(getDBConnection()).prepareStatement(write.toString());
+            PreparedStatement preparedStatement = getDBConnection().prepareStatement(write.toString());
 
             int id = 1;
             for (String value : values) {
