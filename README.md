@@ -1,4 +1,4 @@
-# MySQLLib
+# SimpleMySQLLib
 This library can make it easier to work with .db files.
 
 To get started, create an object of the Database class:
